@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chrome Notifications Example</title>
+</head>
+<body>
+    <h1>Chrome Notifications Example</h1>
+    <button id="showNotification">Show Notification</button>
+
+    <script>
+        // Check if the browser supports the Notification API
+        if ("Notification" in window) {
+            // Request permission to display notifications
+            Notification.requestPermission().then(function (permission) {
+                if (permission === "granted") {
+                    console.log("Notification permission granted.");
+                } else if (permission === "denied") {
+                    console.error("Notification permission denied.");
+                }
+            });
+
+            // Function to show a notification
+            function showNotification() {
+                if (Notification.permission === "granted") {
+                    var notification = new Notification("Hello..!", {
+                        body: "This is a notification from Fresherdotcom.",
+                        icon: "icon.png", // Replace with the path to your icon
+                    });
+
+                    // Close the notification after 5 seconds
+                    setTimeout(function () {
+                        notification.close();
+                    }, 5000);
+
+                    // Add a click event listener to the notification
+                    notification.addEventListener("click", function () {
+                        alert("Notification clicked!");
+                    });
+                } else {
+                    console.error("Notification permission denied.");
+                }
+            }
+
+            // Add a click event listener to the button
+            document.getElementById("showNotification").addEventListener("click", showNotification);
+        } else {
+            console.error("Browser does not support the Notification API.");
+        }
+    </script>
+</body>
+</html>
